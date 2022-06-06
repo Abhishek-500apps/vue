@@ -80,9 +80,17 @@ import login2 from '../components/19-05-22/login2'
 import month from '../components/23-05-22/month'
 import password from '../components/23-05-22/password'
 import pEmit from '../components/26-05-22/pEmit'
-import card from '../components/27-05-22/card'
+import parentcard from '../components/27-05-22/parentcard'
 // import card1 from '../components/27-05-22/card1'
 import tabledata from '../components/29-05-22/tabledata'
+import pproduct from '../components/02-06-22/pproduct'
+import home from '../components/02-06-22/home'
+import sideview from '../components/02-06-22/sideview'
+
+
+
+
+
 
 
 
@@ -165,14 +173,15 @@ const routes = [
     { path:'/password', name:'password',component:password},
     { path:'/month', name:'month',component:month},
     { path:'/pEmit', name:'pEmit',component:pEmit},
-    { path:'/card', name:'card' ,component:card},
-
-    // { path:'/card1', name:'card1' ,component:card1},
+    { path:'/parentcard', name:'parentcard' ,component:parentcard},
     { path:'/tabledata', name:'tabledata',component:tabledata},
+    { path: '/pproduct',name:'pproduct', component:pproduct},
+    { path:'/home', name:'home', component:home},
+    { path:'/sideview', name:'sideview', component:sideview}
+   
     
 
     
-
 ]
 let router = new Router({ routes })
 export default router

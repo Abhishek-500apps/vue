@@ -1,5 +1,6 @@
 <template>
   <div>
+    <br />
     <nav>
       <h1 style="color: white"><b>Student Details</b></h1>
       &nbsp;
@@ -10,32 +11,22 @@
       >
       <b-card>
         <center>
-          <br /><br /><b-row>
-            <b-col cols="5">
-              <cassign
-                :columns="[
-                  'Sno',
-                  'Name',
-                  'age',
-                  'gender',
-                  'dateofbirth',
-                  'class',
-                  'action',
-                ]"
-                :formFields="{
-                  Sno: '',
-                  Name: '',
-                  age: '',
-                  gender: '',
-                  dateofbirth: '',
-                  class: '',
-                }"
-              >
-                <!--  form input fields in this slot-->
-                <template v-slot:input-fields="{ formdata }">
-                  <b-row>
-                    <b-col cols="5">
-                      <b> S.no:</b>
+          <br /><br />
+          <cassign
+            :columns="[
+              'Sno',
+              'Name',
+              'Age',
+              'Gender',
+              'DateOfBirth',
+              'Class',
+              'Action',
+            ]"
+            :formFields="{}"
+          >
+            <!--  form input fields in this slot-->
+            <template v-slot:input-fields="{ formdata }">
+              <!-- <b> S.no:</b>
                       <b-form-input
                         id="input-1"
                         v-model="formdata.Sno"
@@ -44,67 +35,64 @@
                         placeholder="Enter serialNumber"
                       >
                       </b-form-input
-                      ><br />
-                      <b>Name:</b>
-                      <b-form-input
-                        id="input-2"
-                        v-model="formdata.Name"
-                        type="text"
-                        required
-                        placeholder="Enter name"
-                      >
-                      </b-form-input
-                      ><br />
-                      <b> Age:</b>
-                      <b-form-input
-                        id="input-3"
-                        v-model="formdata.age"
-                        type="number"
-                        min="1"
-                        max="100"
-                        required
-                        placeholder="Enter age"
-                      >
-                      </b-form-input
-                      ><br />
-                      <b> Gender:</b>
-                      <b-form-select
-                        id="input-4"
-                        v-model="formdata.gender"
-                        :options="genderOptions"
-                        value-field="gender"
-                        text-field="gender"
-                        required
-                      >
-                      </b-form-select
-                      ><br />
-                      <b>DateOfBirth:</b>
-                      <b-form-input
-                        id="input-5"
-                        v-model="formdata.dateofbirth"
-                        type="date"
-                        required
-                        placeholder="Enter Dateofbirth"
-                      >
-                      </b-form-input
-                      ><br />
-                      <b>Class:</b>
-                      <b-form-select
-                        id="input-6"
-                        v-model="formdata.class"
-                        :options="classOptions"
-                        value-field="class"
-                        text-field="class"
-                        required
-                      >
-                      </b-form-select
-                      ><br /><br />
-                    </b-col>
-                  </b-row>
-                </template>
-              </cassign>
-            </b-col>
-          </b-row>
+                      > -->
+              <br />
+              <b>Name:</b>
+              <b-form-input
+                id="input-2"
+                v-model="formdata.Name"
+                type="text"
+                required
+                placeholder="Enter name"
+              >
+              </b-form-input
+              ><br />
+              <b> Age:</b>
+              <b-form-input
+                id="input-3"
+                v-model="formdata.Age"
+                type="number"
+                min="1"
+                max="100"
+                required
+                placeholder="Enter Age"
+              >
+              </b-form-input
+              ><br />
+              <b> Gender:</b>
+              <b-form-select
+                id="input-4"
+                v-model="formdata.Gender"
+                :options="GenderOptions"
+                value-field="Gender"
+                text-field="id"
+                required
+              >
+              </b-form-select
+              ><br />
+              <b>DateOfBirth:</b>
+              <b-form-input
+                id="input-5"
+                v-model="formdata.DateOfBirth"
+                type="date"
+                required
+                placeholder="Enter DateOfBirth"
+              >
+              </b-form-input
+              ><br />
+              <b>Class:</b>
+              <b-form-select
+                id="input-6"
+                v-model="formdata.Class"
+                :options="ClassOptions"
+                value-field="Class"
+                text-field="Class"
+                required
+              >
+              </b-form-select
+              ><br /><br />
+            </template>
+          </cassign>
         </center>
       </b-card>
     </nav>
@@ -114,27 +102,23 @@
 
 <script>
 import cassign from "./cassign.vue";
-
-
 export default {
-  name: "ASSIGNMENT",
+  name: "Add_Student",
   components: { cassign },
   data() {
     return {
-      genderOptions: [
-        { gender:"Select Gender" },
-        { gender: "Male" },
-        { gender: "Female" },
+      GenderOptions: [
+        { id: "Select Gender", Gender: "Select Gender" },
+        { id: "M", Gender: "Male" },
+        { id: "F", Gender: "Female" },
       ],
-
-
-      classOptions: [
-        { class: "Select Class" },
-        { class: "B-tech" },
-        { class: "Degree" },
-        { class: "Diploma" },
-        { class: "Inter" },
-        { class: "SSC" },
+      ClassOptions: [
+        { Class: "Select Class" },
+        { Class: "B-tech" },
+        { Class: "Degree" },
+        { Class: "Diploma" },
+        { Class: "Inter" },
+        { Class: "SSC" },
       ],
     };
   },
@@ -146,6 +130,6 @@ nav {
 }
 #card {
   position: relative;
-  left: 1950px;
+  left: 1570px;
 }
 </style>

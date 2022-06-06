@@ -1,10 +1,9 @@
 <template>
   <div>
     <sideview></sideview>
-    <h2>welcome</h2>
+    <h2>welcome to Home page!!</h2>
   </div>
 </template>
-
 <script>
 import sideview from "./sideview.vue"
 export default {

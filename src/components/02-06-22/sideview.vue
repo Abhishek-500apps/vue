@@ -27,8 +27,6 @@
     </b-sidebar>
   </div>
 </template>
-
-
 <script>
 export default {
   name: "home_page", // snake case

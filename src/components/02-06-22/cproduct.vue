@@ -36,7 +36,7 @@
             @click="filter = ''"
             >Search</b-button
           >
-          <b-button type="sumbit" id="show" variant="warning" >showall</b-button>
+          <b-button type="sumbit" id="show" variant="warning">showall</b-button>
         </b-col></b-row
       >
     </b-form>
@@ -45,33 +45,19 @@
       <b-button @click="Add()" variant="info"
         ><b>Add <b-icon-plus-circle-fill /></b></b-button
       >&nbsp;
-      <b-button @click="export_product()" variant="info"
-        ><b>Export<b-icon-arrow-up-short /></b></b-button
+      <b-button  variant="info"
+        @click="Export()"><b>Export<b-icon-arrow-down-short /></b></b-button
       >&nbsp;
-      <b-button @click="import_product()" variant="info"
+      <b-button @click="Import()" variant="info"
         ><b
-          >Import<u><b-icon-arrow-down-short /></u></b></b-button
+          >Import<u><b-icon-arrow-up-short /></u></b></b-button
       >&nbsp;
       <b-button @click="multiple()" variant="danger">Multiple-Delete</b-button>
     </div>
     <br /><br />
-    <p id="file"></p>
-    <input type="file" ref="doc" @change="readFile()" />
-    <div>{{ content }}</div>
-    <b-input-group>
-      <b-row
-        ><b-col cols="12">
-          <b-form-input id="filter-input" v-model="filter">
-          </b-form-input> </b-col
-      ></b-row>
-      <b-input-group-append>
-        <b-button :disabled="!filter" variant="danger" @click="filter = ''"
-          >clear</b-button
-        >
-      </b-input-group-append>
-    </b-input-group>
-    <br /><br />
+
     <b-table
+      id="dataTable"
       class="css-serial"
       striped
       hover
@@ -111,7 +97,7 @@
             type="submit"
             v-b-tooltip.hover.left
             title="Save"
-            variant="success"
+            variant="success" 
             ><b-icon-save /></b-button
           >&nbsp;
         </b-form>
@@ -128,9 +114,13 @@
         Do you want to delete dataItem?
       </b-card>
     </b-modal>
+       
+    <input type="file" ref="doc" @change="readFile()" />    
+    <br /><br />
   </div>
 </template>
 <script>
+import exportFromJSON from 'export-from-json'
 export default {
   name: "product_details", //snake case
   props: ["Columns", "formFields"],
@@ -145,6 +135,7 @@ export default {
       delete_data: null,
       filter: null,
       file: null,
+      
     };
   },
 
@@ -192,23 +183,63 @@ export default {
       this.delete_data = data;
       this.$refs.deleteConfirmation.show();
     },
-    readFile() {
+     readFile() {
       this.file = this.$refs.doc.files[0];
       const reader = new FileReader();
       if (this.file.name.includes(".txt")) {
         reader.onload = (res) => {
-          this.content = res.target.result;
+         document.getElementById("file").innerHTML = res.target.result;
         };
         reader.onerror = (err) => console.log(err);
         reader.readAsText(this.file);
       } else {
         reader.onload = (res) => {
-          console.log(res.target.result);
-          document.getElementById("file").innerHTML = res.target.result;
+          //document.getElementById("file").innerHTML = res.target.result;
+          const convert = csv => {
+          const myArray = csv.split("\n");
+        //console.log(myArray[0]);
+                    //console.log(myArray[0]);
+                   const keys = myArray[0].split(',')
+                   //const index = myArray.length-1
+                   return myArray.splice(1).map(myArray => {
+                     return myArray.split(',').reduce((acc, cur, i) => {
+                       const toAdd = {};
+                       toAdd[keys[i]] = cur;
+                       return { ...acc, ...toAdd};
+                     },{})
+                   })
+          }
+          const coverted = res.target.result
+          console.log(convert(coverted))
+          this.tableData=convert(coverted);
+          console.log( this.tableData)
+          return this.tableData;
         };
         reader.onerror = (err) => console.log(err);
         reader.readAsText(this.file);
       }
+    },
+    Export() {
+      const objectToCsv = function (data) {
+        const csvRows = [];
+        const headers = Object.keys(data[0]);
+        csvRows.push(headers.join(","));
+        for (const row of data) {
+          const values = headers.map((header) => {
+            const val = row[header];
+            return `"${val}"`;
+          });
+          csvRows.push(values.join(","));
+        }
+        return csvRows.join("\n");
+      };
+      const data = this.tableData;
+      const csvData = objectToCsv(data);
+      console.log(csvData);
+      //const data = this.tableData;
+      const fileName = "TableData";
+      const exportType = exportFromJSON.types.csv;
+        exportFromJSON({ data, fileName, exportType });
     },
   },
 };
@@ -272,13 +303,13 @@ export default {
   top: -400px;
 }
 #search {
-    position: relative;
-    top: -98px;
-    left: 100px;
+  position: relative;
+  top: -98px;
+  left: 100px;
 }
-#show{
-    position: relative;
-    top: -100px;
-    left: 130px;
+#show {
+  position: relative;
+  top: -100px;
+  left: 130px;
 }
 </style>
